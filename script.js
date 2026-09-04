@@ -1,38 +1,39 @@
-const form = document.getElementById('loginForm');
+sconst form = document.getElementById('loginForm');
+const emailInput = document.getElementById('email');
 const senhaInput = document.getElementById('senha');
-const mensagemDiv = document.getElementById('mensagem');
 
-form.addEventListener('submit', async function(event) {
-    event.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const senha = senhaInput.value;
+  const email = emailInput.value.trim();
+  const senha = senhaInput.value;
 
-    mensagemDiv.style.display = 'block';
-    mensagemDiv.className = '';
-    mensagemDiv.textContent = 'Verificando...';
+  if (!email || !senha) {
+    alert('Por favor, preencha todos os campos.');
+    return;
+  }
 
-    try {
-        const resposta = await fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, senha })
-        });
+  try {
+    const response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+     [{"email" : "lyra@gmail.com" , "senha" : "1234"}]
+    },
+      body: JSON.stringify({ email, senha }),
+    });
 
-        const resultado = await resposta.json();
+    const data = await response.json();
 
-        if (resposta.ok) {
-            mensagemDiv.className = 'sucesso';
-            mensagemDiv.textContent = resultado.mensagem;
-        } else {
-            mensagemDiv.className = 'erro';
-            mensagemDiv.textContent = resultado.mensagem;
-        }
-
-    } catch (erro) {
-        mensagemDiv.className = 'erro';
-        mensagemDiv.textContent = 'Erro ao conectar com o servidor.';
+    if (response.ok) {
+      localStorage.setItem('usuarioLogado', JSON.stringify(data.usuario));
+      alert(data.message);
+      window.location.href = 'dashboard.html';
+    } else {
+      alert(data.message);
     }
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    alert('Não foi possível conectar ao servidor.');
+  }
 });

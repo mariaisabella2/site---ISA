@@ -1,16 +1,18 @@
 {
-  "name": "login-isa",
+  "name": "petshop",
   "version": "1.0.0",
-  "description": "Site de login minimalista com backend",
-  "main": "server.js",
+  "description": "",
+  "main": "script.js",
   "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.3"
+  }
 }
